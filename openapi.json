@@ -1,0 +1,74 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "demo-quality backend",
+    "version": "1.0.0",
+    "description": "後端 mock server 的 REST 介面;gateway.py 以 FastMCP.from_openapi 把每個 operation 生成 MCP tool。"
+  },
+  "paths": {
+    "/fabs": {
+      "get": {
+        "operationId": "list_fabs",
+        "summary": "列出可查詢的 fab 候選",
+        "description": "列出可查詢的 fab 候選(id/name/region/tech_node/active),用於取得 get_quality 的 fab。參數皆選填、可自由組合並真的過濾。",
+        "parameters": [
+          {"name": "region", "in": "query", "required": false, "schema": {"type": "string"}, "description": "依地區精確過濾(如 TW)"},
+          {"name": "active", "in": "query", "required": false, "schema": {"type": "boolean"}, "description": "只留啟用/停用的 fab"},
+          {"name": "name_contains", "in": "query", "required": false, "schema": {"type": "string"}, "description": "對 name 做大小寫不敏感子字串比對"}
+        ],
+        "responses": {"200": {"description": "fab 候選清單", "content": {"application/json": {"schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object"}}, "errorCode": {"type": "string"}}}}}}}
+      }
+    },
+    "/devices": {
+      "get": {
+        "operationId": "list_devices",
+        "summary": "列出 device 主檔候選",
+        "description": "列出 device 主檔候選(共 50 個,每個含 10 欄:id/name/fabs 為相關欄,vendor/package_type/wafer_size_mm/introduced_date/lifecycle_status/owner_team/category 為雜訊欄),用於取得 get_quality 的 device。注意:主檔 50 個 device 中僅 DEV-01~08 在 quality 有量測資料。參數皆選填、可自由組合並真的過濾。",
+        "parameters": [
+          {"name": "fab", "in": "query", "required": false, "schema": {"type": "string"}, "description": "只留 fabs 欄含該 fab 的 device"},
+          {"name": "lifecycle_status", "in": "query", "required": false, "schema": {"type": "string"}, "description": "只留該生命週期狀態(active/NPI/sustaining/EOL)"},
+          {"name": "name_contains", "in": "query", "required": false, "schema": {"type": "string"}, "description": "對 device 名稱做大小寫不敏感子字串比對"}
+        ],
+        "responses": {"200": {"description": "device 候選清單", "content": {"application/json": {"schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object"}}, "errorCode": {"type": "string"}}}}}}}
+      }
+    },
+    "/stations": {
+      "get": {
+        "operationId": "list_stations",
+        "summary": "列出 station 候選",
+        "description": "列出 station 候選(id + 出現過的 fabs + lot_count),供縮小 device/quality 的查詢範圍。參數皆選填、可自由組合並真的過濾。",
+        "parameters": [
+          {"name": "fab", "in": "query", "required": false, "schema": {"type": "string"}, "description": "只留該 fab 的 station"},
+          {"name": "device", "in": "query", "required": false, "schema": {"type": "string"}, "description": "依 device id 或名稱過濾(只留該 device 用過的 station)"},
+          {"name": "name_contains", "in": "query", "required": false, "schema": {"type": "string"}, "description": "對 station 代號做大小寫不敏感子字串比對"}
+        ],
+        "responses": {"200": {"description": "station 候選清單", "content": {"application/json": {"schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object"}}, "errorCode": {"type": "string"}}}}}}}
+      }
+    },
+    "/weeks": {
+      "get": {
+        "operationId": "list_weeks",
+        "summary": "列出實際有資料的週別",
+        "description": "列出實際有量測資料的週別(week + lot_count),用於確認 get_quality 的 week。",
+        "parameters": [
+          {"name": "fab", "in": "query", "required": false, "schema": {"type": "string"}, "description": "只看該 fab 有資料的週別"},
+          {"name": "recent", "in": "query", "required": false, "schema": {"type": "string"}, "description": "只回最近 N 週(依 week 由新到舊)"}
+        ],
+        "responses": {"200": {"description": "週別清單", "content": {"application/json": {"schema": {"type": "object", "properties": {"data": {"type": "array", "items": {"type": "object"}}, "errorCode": {"type": "string"}}}}}}}
+      }
+    },
+    "/quality": {
+      "get": {
+        "operationId": "get_quality",
+        "summary": "取得指定 fab/device/week 的品質量測資料",
+        "description": "取得指定 fab/week 與一組 device 的品質量測資料,回傳信封 {data, errorCode}。三個條件:fab 先呼叫 list_fabs、device(可多個)先呼叫 list_devices、week 見 skill(可用範圍 2026-W29~2026-W32,預設最新週 2026-W32)。device 為 list,OR 語意:回符合任一 device 的所有列。",
+        "parameters": [
+          {"name": "fab", "in": "query", "required": true, "schema": {"type": "string"}, "description": "fab id,取自 list_fabs"},
+          {"name": "device", "in": "query", "required": true, "style": "form", "explode": true, "schema": {"type": "array", "items": {"type": "string"}}, "description": "device id 清單(可傳多個,OR 語意),取自 list_devices;僅 DEV-01~08 有量測資料"},
+          {"name": "week", "in": "query", "required": true, "schema": {"type": "string"}, "description": "ISO 週別 YYYY-Www,見 skill references/weeks.md"}
+        ],
+        "responses": {"200": {"description": "品質量測信封", "content": {"application/json": {"schema": {"type": "object"}}}}}
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "FAB_A",
+    "name": "Fab A - Hsinchu",
+    "region": "TW",
+    "tech_node": "N7",
+    "active": true
+  },
+  {
+    "id": "FAB_B",
+    "name": "Fab B - Tainan",
+    "region": "TW",
+    "tech_node": "N5",
+    "active": true
+  },
+  {
+    "id": "FAB_C",
+    "name": "Fab C - Kaohsiung",
+    "region": "TW",
+    "tech_node": "N3",
+    "active": true
+  }
+]

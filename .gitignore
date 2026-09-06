@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# 虛擬環境
+.venv/
+venv/
+
+# logs
+*.log
+
+# macOS
+.DS_Store
+
+# gateway 啟動時自動 materialize(真相來源為 gateway.py 的 SKILL_MARKDOWN / WEEKS_REFERENCE 常數)
+skills/

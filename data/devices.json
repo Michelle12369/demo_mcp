@@ -1,0 +1,767 @@
+[
+  {
+    "id": "DEV-01",
+    "name": "Device Alpha",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Analog",
+    "vendor": "Initech",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2019-10-17",
+    "lifecycle_status": "active",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-02",
+    "name": "Device Beta",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Stark Micro",
+    "package_type": "QFN",
+    "wafer_size_mm": 200,
+    "introduced_date": "2020-05-28",
+    "lifecycle_status": "active",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-03",
+    "name": "Device Gamma",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Memory",
+    "vendor": "Acme Semi",
+    "package_type": "QFN",
+    "wafer_size_mm": 200,
+    "introduced_date": "2020-04-14",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-04",
+    "name": "Device Delta",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Memory",
+    "vendor": "Acme Semi",
+    "package_type": "LGA",
+    "wafer_size_mm": 300,
+    "introduced_date": "2019-08-09",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-05",
+    "name": "Device Epsilon",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Umbrella",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2021-04-25",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-2"
+  },
+  {
+    "id": "DEV-06",
+    "name": "Device Zeta",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Power",
+    "vendor": "Stark Micro",
+    "package_type": "BGA",
+    "wafer_size_mm": 200,
+    "introduced_date": "2019-12-24",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-07",
+    "name": "Device Eta",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Stark Micro",
+    "package_type": "CSP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2023-01-16",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-08",
+    "name": "Device Theta",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Analog",
+    "vendor": "Globex",
+    "package_type": "BGA",
+    "wafer_size_mm": 200,
+    "introduced_date": "2020-12-13",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-B"
+  },
+  {
+    "id": "DEV-09",
+    "name": "Device Iota",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Power",
+    "vendor": "Acme Semi",
+    "package_type": "QFN",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-09-20",
+    "lifecycle_status": "NPI",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-10",
+    "name": "Device Kappa",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Analog",
+    "vendor": "Globex",
+    "package_type": "QFN",
+    "wafer_size_mm": 200,
+    "introduced_date": "2024-08-08",
+    "lifecycle_status": "NPI",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-11",
+    "name": "Device Lambda",
+    "fabs": [
+      "FAB_A",
+      "FAB_C"
+    ],
+    "category": "Sensor",
+    "vendor": "Stark Micro",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2021-06-06",
+    "lifecycle_status": "NPI",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-12",
+    "name": "Device Mu",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Power",
+    "vendor": "Globex",
+    "package_type": "CSP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2020-03-21",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-13",
+    "name": "Device Nu",
+    "fabs": [
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Acme Semi",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-04-09",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-2"
+  },
+  {
+    "id": "DEV-14",
+    "name": "Device Xi",
+    "fabs": [
+      "FAB_A"
+    ],
+    "category": "Power",
+    "vendor": "Stark Micro",
+    "package_type": "CSP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2019-01-28",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-15",
+    "name": "Device Omicron",
+    "fabs": [
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Initech",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2019-02-07",
+    "lifecycle_status": "sustaining",
+    "owner_team": "Yield-2"
+  },
+  {
+    "id": "DEV-16",
+    "name": "Device Pi",
+    "fabs": [
+      "FAB_A",
+      "FAB_C"
+    ],
+    "category": "Analog",
+    "vendor": "Globex",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2021-07-13",
+    "lifecycle_status": "NPI",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-17",
+    "name": "Device Rho",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Stark Micro",
+    "package_type": "LGA",
+    "wafer_size_mm": 300,
+    "introduced_date": "2019-01-17",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-18",
+    "name": "Device Sigma",
+    "fabs": [
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Memory",
+    "vendor": "Stark Micro",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2023-10-16",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-19",
+    "name": "Device Tau",
+    "fabs": [
+      "FAB_A",
+      "FAB_C"
+    ],
+    "category": "Memory",
+    "vendor": "Stark Micro",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-03-25",
+    "lifecycle_status": "EOL",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-20",
+    "name": "Device Upsilon",
+    "fabs": [
+      "FAB_A",
+      "FAB_B"
+    ],
+    "category": "RF",
+    "vendor": "Umbrella",
+    "package_type": "QFN",
+    "wafer_size_mm": 300,
+    "introduced_date": "2023-05-09",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-2"
+  },
+  {
+    "id": "DEV-21",
+    "name": "Device Phi",
+    "fabs": [
+      "FAB_A"
+    ],
+    "category": "Analog",
+    "vendor": "Stark Micro",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2025-03-13",
+    "lifecycle_status": "active",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-22",
+    "name": "Device Chi",
+    "fabs": [
+      "FAB_A"
+    ],
+    "category": "Power",
+    "vendor": "Umbrella",
+    "package_type": "QFN",
+    "wafer_size_mm": 300,
+    "introduced_date": "2022-08-06",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-23",
+    "name": "Device Psi",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Analog",
+    "vendor": "Initech",
+    "package_type": "BGA",
+    "wafer_size_mm": 200,
+    "introduced_date": "2019-08-04",
+    "lifecycle_status": "active",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-24",
+    "name": "Device Omega",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Sensor",
+    "vendor": "Umbrella",
+    "package_type": "LGA",
+    "wafer_size_mm": 300,
+    "introduced_date": "2020-08-06",
+    "lifecycle_status": "EOL",
+    "owner_team": "PIE-B"
+  },
+  {
+    "id": "DEV-25",
+    "name": "Device Model-25",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Memory",
+    "vendor": "Stark Micro",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2025-11-05",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-26",
+    "name": "Device Model-26",
+    "fabs": [
+      "FAB_A",
+      "FAB_B"
+    ],
+    "category": "Sensor",
+    "vendor": "Globex",
+    "package_type": "QFN",
+    "wafer_size_mm": 300,
+    "introduced_date": "2021-07-19",
+    "lifecycle_status": "sustaining",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-27",
+    "name": "Device Model-27",
+    "fabs": [
+      "FAB_A",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Globex",
+    "package_type": "LGA",
+    "wafer_size_mm": 200,
+    "introduced_date": "2019-01-11",
+    "lifecycle_status": "sustaining",
+    "owner_team": "PIE-B"
+  },
+  {
+    "id": "DEV-28",
+    "name": "Device Model-28",
+    "fabs": [
+      "FAB_A"
+    ],
+    "category": "Analog",
+    "vendor": "Stark Micro",
+    "package_type": "QFN",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-06-03",
+    "lifecycle_status": "EOL",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-29",
+    "name": "Device Model-29",
+    "fabs": [
+      "FAB_A"
+    ],
+    "category": "RF",
+    "vendor": "Stark Micro",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-09-24",
+    "lifecycle_status": "EOL",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-30",
+    "name": "Device Model-30",
+    "fabs": [
+      "FAB_C"
+    ],
+    "category": "Logic",
+    "vendor": "Globex",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-05-16",
+    "lifecycle_status": "sustaining",
+    "owner_team": "PIE-B"
+  },
+  {
+    "id": "DEV-31",
+    "name": "Device Model-31",
+    "fabs": [
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Analog",
+    "vendor": "Umbrella",
+    "package_type": "CSP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2021-01-18",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-2"
+  },
+  {
+    "id": "DEV-32",
+    "name": "Device Model-32",
+    "fabs": [
+      "FAB_A"
+    ],
+    "category": "RF",
+    "vendor": "Globex",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-03-07",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-33",
+    "name": "Device Model-33",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Initech",
+    "package_type": "LGA",
+    "wafer_size_mm": 200,
+    "introduced_date": "2021-03-15",
+    "lifecycle_status": "active",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-34",
+    "name": "Device Model-34",
+    "fabs": [
+      "FAB_A",
+      "FAB_B"
+    ],
+    "category": "Sensor",
+    "vendor": "Stark Micro",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2023-02-12",
+    "lifecycle_status": "active",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-35",
+    "name": "Device Model-35",
+    "fabs": [
+      "FAB_A",
+      "FAB_C"
+    ],
+    "category": "Sensor",
+    "vendor": "Umbrella",
+    "package_type": "LGA",
+    "wafer_size_mm": 200,
+    "introduced_date": "2022-07-23",
+    "lifecycle_status": "sustaining",
+    "owner_team": "PIE-B"
+  },
+  {
+    "id": "DEV-36",
+    "name": "Device Model-36",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Power",
+    "vendor": "Umbrella",
+    "package_type": "DIP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2021-03-06",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-B"
+  },
+  {
+    "id": "DEV-37",
+    "name": "Device Model-37",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Power",
+    "vendor": "Stark Micro",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2024-11-15",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-38",
+    "name": "Device Model-38",
+    "fabs": [
+      "FAB_A",
+      "FAB_B"
+    ],
+    "category": "Memory",
+    "vendor": "Globex",
+    "package_type": "BGA",
+    "wafer_size_mm": 300,
+    "introduced_date": "2025-03-15",
+    "lifecycle_status": "NPI",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-39",
+    "name": "Device Model-39",
+    "fabs": [
+      "FAB_B"
+    ],
+    "category": "RF",
+    "vendor": "Acme Semi",
+    "package_type": "QFN",
+    "wafer_size_mm": 300,
+    "introduced_date": "2019-02-19",
+    "lifecycle_status": "EOL",
+    "owner_team": "Integration"
+  },
+  {
+    "id": "DEV-40",
+    "name": "Device Model-40",
+    "fabs": [
+      "FAB_A",
+      "FAB_B"
+    ],
+    "category": "RF",
+    "vendor": "Stark Micro",
+    "package_type": "BGA",
+    "wafer_size_mm": 300,
+    "introduced_date": "2020-12-24",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-2"
+  },
+  {
+    "id": "DEV-41",
+    "name": "Device Model-41",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Logic",
+    "vendor": "Umbrella",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2025-05-23",
+    "lifecycle_status": "active",
+    "owner_team": "PIE-B"
+  },
+  {
+    "id": "DEV-42",
+    "name": "Device Model-42",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Sensor",
+    "vendor": "Globex",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2021-09-15",
+    "lifecycle_status": "NPI",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-43",
+    "name": "Device Model-43",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Sensor",
+    "vendor": "Acme Semi",
+    "package_type": "QFN",
+    "wafer_size_mm": 200,
+    "introduced_date": "2024-09-05",
+    "lifecycle_status": "EOL",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-44",
+    "name": "Device Model-44",
+    "fabs": [
+      "FAB_A",
+      "FAB_B"
+    ],
+    "category": "Logic",
+    "vendor": "Acme Semi",
+    "package_type": "LGA",
+    "wafer_size_mm": 200,
+    "introduced_date": "2024-01-28",
+    "lifecycle_status": "active",
+    "owner_team": "Yield-2"
+  },
+  {
+    "id": "DEV-45",
+    "name": "Device Model-45",
+    "fabs": [
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "RF",
+    "vendor": "Acme Semi",
+    "package_type": "QFN",
+    "wafer_size_mm": 300,
+    "introduced_date": "2023-06-19",
+    "lifecycle_status": "NPI",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-46",
+    "name": "Device Model-46",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Logic",
+    "vendor": "Acme Semi",
+    "package_type": "BGA",
+    "wafer_size_mm": 300,
+    "introduced_date": "2019-06-19",
+    "lifecycle_status": "EOL",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-47",
+    "name": "Device Model-47",
+    "fabs": [
+      "FAB_C"
+    ],
+    "category": "Power",
+    "vendor": "Globex",
+    "package_type": "CSP",
+    "wafer_size_mm": 200,
+    "introduced_date": "2023-01-18",
+    "lifecycle_status": "EOL",
+    "owner_team": "PIE-A"
+  },
+  {
+    "id": "DEV-48",
+    "name": "Device Model-48",
+    "fabs": [
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Logic",
+    "vendor": "Initech",
+    "package_type": "CSP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2021-12-04",
+    "lifecycle_status": "NPI",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-49",
+    "name": "Device Model-49",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Power",
+    "vendor": "Initech",
+    "package_type": "DIP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2022-07-23",
+    "lifecycle_status": "NPI",
+    "owner_team": "Yield-1"
+  },
+  {
+    "id": "DEV-50",
+    "name": "Device Model-50",
+    "fabs": [
+      "FAB_A",
+      "FAB_B",
+      "FAB_C"
+    ],
+    "category": "Analog",
+    "vendor": "Initech",
+    "package_type": "CSP",
+    "wafer_size_mm": 300,
+    "introduced_date": "2019-02-13",
+    "lifecycle_status": "NPI",
+    "owner_team": "PIE-A"
+  }
+]
