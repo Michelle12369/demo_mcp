@@ -61,11 +61,11 @@
       "get": {
         "operationId": "get_quality",
         "summary": "取得指定 fab/device/week 的品質量測資料",
-        "description": "取得指定 fab/week 與一組 device 的品質量測資料,回傳信封 {data, errorCode}。三個條件:fab 先呼叫 list_fabs、device(可多個)先呼叫 list_devices、week 見 skill(可用範圍 2026-W29~2026-W32,預設最新週 2026-W32)。device 為 list,OR 語意:回符合任一 device 的所有列。",
+        "description": "取得指定 fab/week/device 的品質量測資料,回傳信封 {data, errorCode}(data.queryResult 為量測列)。三個條件皆可傳多個(list,OR 語意:回符合任一值的所有列,維度間為 AND):fab 先呼叫 list_fabs、device 先呼叫 list_devices、week 見 skill(可用範圍 2026-W29~2026-W32,預設最新週 2026-W32)。",
         "parameters": [
-          {"name": "fab", "in": "query", "required": true, "schema": {"type": "string"}, "description": "fab id,取自 list_fabs"},
+          {"name": "fab", "in": "query", "required": true, "style": "form", "explode": true, "schema": {"type": "array", "items": {"type": "string"}}, "description": "fab id 清單(可傳多個,OR 語意),取自 list_fabs"},
           {"name": "device", "in": "query", "required": true, "style": "form", "explode": true, "schema": {"type": "array", "items": {"type": "string"}}, "description": "device id 清單(可傳多個,OR 語意),取自 list_devices;僅 DEV-01~08 有量測資料"},
-          {"name": "week", "in": "query", "required": true, "schema": {"type": "string"}, "description": "ISO 週別 YYYY-Www,見 skill references/weeks.md"}
+          {"name": "week", "in": "query", "required": true, "style": "form", "explode": true, "schema": {"type": "array", "items": {"type": "string"}}, "description": "ISO 週別 YYYY-Www 清單(可傳多個,OR 語意),見 skill references/weeks.md"}
         ],
         "responses": {"200": {"description": "品質量測信封", "content": {"application/json": {"schema": {"type": "object"}}}}}
       }

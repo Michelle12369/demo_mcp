@@ -33,7 +33,7 @@ OPENAPI_SPEC = BASE_DIR / "openapi.json"
 
 # SKILL.md 本文——面向模型,涵蓋 5 隻 tool 的語意、呼叫順序/相依、參數來源與範例。
 SKILL_MARKDOWN = """---
-name: demo-quality-usage-test
+name: demo-quality-usage
 description: demo_quality connector 的使用skill——查詢/落表前必讀,涵蓋 5 隻 tool 清單與語意、呼叫順序與相依、參數來源、範例。
 ---
 
@@ -60,16 +60,18 @@ feeder(純 lookup,自動落成一張**小表**,供反問使用者或縮小查詢
 
 主查詢(回應的 `data` 自動落成一張**大表**供分析):
 
-- `get_quality(fab, device, week)`：取得指定 fab/week 與**一組 device** 的品質量測資料,回傳信封
-  `{"data": [...量測列...], "errorCode": ""}`。`device` 為 **list**(可傳多個,OR 語意:回符合任一
-  device 的所有列,方便一次比較多個 device)。每列含淺巢狀欄 `device: {"id","name"}`
+- `get_quality(fab, device, week)`：取得品質量測資料,回傳信封
+  `{"data": {"queryResult": [...量測列...]}, "errorCode": ""}`。
+  **`fab`/`device`/`week` 三者皆為 list**(可各傳多個,OR 語意:回符合任一值的所有列;維度間為 AND,
+  方便一次比較多個 fab/週/device)。每列含淺巢狀欄 `device: {"id","name"}`
   與 `fab`/`week`/`station`/`yield_pct`/`defect_count`/`measured_at`。
   `data` 自動落表(表名見回饋);`errorCode` 出現在回饋文字的「回應其他欄位」,
   非空時視為業務錯誤,需轉述使用者、不當作資料使用。
 
 ## 呼叫順序與相依
 
-1. `get_quality` 有**三個必填條件**:`fab`、`device`、`week`——三個都齊了才可呼叫。
+1. `get_quality` 有**三個必填條件**:`fab`、`device`、`week`——三個都齊了才可呼叫;
+   **三者皆可傳 list**(各自 OR、維度間 AND),要跨多 fab/週/device 比較時一次帶多個。
 2. `fab` 未知 → 先 `list_fabs` 取候選;`device` 未知 → 先 `list_devices`
    (可帶 `fab=` 縮小)取候選。兩隻 feeder 只需取回傳中的 `id` 值。
 3. `week` 見下「參數來源」;不確定該 fab 有哪些週別可先 `list_weeks(fab=...)`。
@@ -79,11 +81,11 @@ feeder(純 lookup,自動落成一張**小表**,供反問使用者或縮小查詢
 ## 落表後的 SQL(展開巢狀 data)
 
 `get_quality` 自動落表後(表名如 `demo_quality_get_quality`),該表是**一列信封**——
-`data` 欄是 array of struct、`errorCode` 是字串。分析前必須先用 UNNEST 把 `data`
-攤平成一列一個量測:
+`data` 欄是 struct `{queryResult: array of struct}`、`errorCode` 是字串。分析前必須先用 UNNEST
+把 `data.queryResult` 攤平成一列一個量測:
 
 ```sql
-SELECT unnest.* FROM demo_quality_get_quality, UNNEST(data) AS t(unnest)
+SELECT unnest.* FROM demo_quality_get_quality, UNNEST(data.queryResult) AS t(unnest)
 ```
 
 - 表名以實際回饋為準(下例用 `demo_quality_get_quality`);`unnest.*` 會展開成
@@ -92,18 +94,20 @@ SELECT unnest.* FROM demo_quality_get_quality, UNNEST(data) AS t(unnest)
 - 常見做法:把展開結果當 CTE/子查詢,再接聚合。例如各站平均良率:
 
 ```sql
-WITH q AS (SELECT unnest.* FROM demo_quality_get_quality, UNNEST(data) AS t(unnest))
+WITH q AS (SELECT unnest.* FROM demo_quality_get_quality, UNNEST(data.queryResult) AS t(unnest))
 SELECT station, AVG(yield_pct) AS avg_yield, AVG(defect_count) AS avg_def
 FROM q GROUP BY station ORDER BY avg_yield;
 ```
 
 ## 參數來源
 
-- `fab`  ← `list_fabs` 回傳任一物件的 `id`;使用者也可能直接指名 fab 代號,可略過 list_fabs。
+- `fab`  ← `list_fabs` 回傳物件的 `id`;**可傳多個**(list,OR 語意,一次比較多廠);
+  使用者也可能直接指名 fab 代號,可略過 list_fabs。
 - `device`← `list_devices` 回傳物件的 `id`(**取 id 即可,其餘雜訊欄忽略**);**可傳多個**
   (list,OR 語意,一次比較多個 device);僅 `DEV-01~08` 有量測資料。
-- `week` ← ISO 週別字串 `YYYY-Www`。可用範圍 **2026-W29 ~ 2026-W32**,未指定時預設最新週
-  **2026-W32**(詳見 references/weeks.md);可用 `list_weeks` 確認實際有資料的週別。
+- `week` ← ISO 週別字串 `YYYY-Www`;**可傳多個**(list,OR 語意,一次比較多週)。可用範圍
+  **2026-W29 ~ 2026-W32**,未指定時預設最新週 **2026-W32**(詳見 references/weeks.md);
+  可用 `list_weeks` 確認實際有資料的週別。
 
 ## 範例
 
@@ -112,11 +116,12 @@ FROM q GROUP BY station ORDER BY avg_yield;
 1. `list_fabs(name_contains="Fab A")` → 從自動落的小表確認 `id="FAB_A"`。
 2. `list_devices(fab="FAB_A", name_contains="Alpha")` → 確認 `id="DEV-01"`。
 3. week 未明講 → 依 skill 預設最新週 `2026-W32`(或先 `list_weeks(fab="FAB_A")` 確認)。
-4. `get_quality(fab="FAB_A", device=["DEV-01"], week="2026-W32")` → 回饋給出表名
+4. `get_quality(fab=["FAB_A"], device=["DEV-01"], week=["2026-W32"])` → 回饋給出表名
    (如 `demo_quality_get_quality`),`data` 已自動落表。
-   (要一次比較多個 device 時,`device` 傳 list,如 `["DEV-01","DEV-02"]`。)
+   (三個條件皆為 list;要跨多廠/多週/多 device 比較時各傳多個,如
+   `fab=["FAB_A","FAB_B"], week=["2026-W31","2026-W32"]`。)
 5. 先展開再分析:
-   `SELECT unnest.* FROM demo_quality_get_quality, UNNEST(data) AS t(unnest)`
+   `SELECT unnest.* FROM demo_quality_get_quality, UNNEST(data.queryResult) AS t(unnest)`
    (見「落表後的 SQL」),之後即可對展開結果下 SQL 分析良率與缺陷分布。
 """
 
@@ -132,10 +137,10 @@ WEEKS_REFERENCE = """# 可用週別參考(get_quality 的第三個條件 week)
 
 def materialize_skills_dir() -> Path:
     skills_root = BASE_DIR / "skills"
-    usage_dir = skills_root / "usage-test"
-    (usage_dir / "references").mkdir(parents=True, exist_ok=True)
-    (usage_dir / "SKILL.md").write_text(SKILL_MARKDOWN, encoding="utf-8")
-    (usage_dir / "references" / "weeks.md").write_text(WEEKS_REFERENCE, encoding="utf-8")
+    # usage_dir = skills_root / "usage"
+    # (usage_dir / "references").mkdir(parents=True, exist_ok=True)
+    # (usage_dir / "SKILL.md").write_text(SKILL_MARKDOWN, encoding="utf-8")
+    # (usage_dir / "references" / "weeks.md").write_text(WEEKS_REFERENCE, encoding="utf-8")
     return skills_root
 
 

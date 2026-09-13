@@ -66,7 +66,7 @@ async def list_fabs(req: Request) -> JSONResponse:
         if not _match(f.get("name", ""), name_contains):
             continue
         out.append(f)
-    return JSONResponse({"data": out, "errorCode": ""})
+    return JSONResponse({"data": out, "errorCode": "", "meta":{"total": 3}})
 
 
 # ── /devices (list_devices) ───────────────────────────────────────────────────
@@ -128,23 +128,27 @@ async def list_weeks(req: Request) -> JSONResponse:
     weeks = [{"week": w, "lot_count": counts[w]} for w in sorted(counts, reverse=True)]
     if recent is not None and recent > 0:
         weeks = weeks[:recent]
-    return JSONResponse({"data": weeks, "errorCode": ""})
+    return JSONResponse(weeks)
 
 
 # ── /quality (get_quality) — 依 fab/device/week 真過濾 ────────────────────────
 async def get_quality(req: Request) -> JSONResponse:
-    """依 fab / week / device 真過濾;device 吃 **list**(OR 語意:回符合任一 device 的所有列)。
-    - fab/week 超出可用範圍 → 回可行動 errorCode、data 空。
-    - device list 裡「全部」都無量測資料 → 回可行動 errorCode(有量測資料的僅 DEV-01~08)。
-    - device list 裡「部分」無資料 → 靜默忽略無資料者,只回有資料者的列。
-    - 命中 → 回符合的量測列。
+    """依 fab / week / device 真過濾;三者皆吃 **list**(OR 語意:回符合任一值的所有列,
+    三個維度之間為 AND)。
+    - 某維度 list「全部」無效 → 回可行動 errorCode、data 空。
+    - 某維度 list「部分」無效 → 靜默忽略無效者,只用有效值過濾。
+    - 命中 → 回符合的量測列(data.queryResult)。
     """
-    fab = req.query_params.get("fab")
-    week = req.query_params.get("week")
-    devices = req.query_params.getlist("device")
-    # 容錯:若以逗號分隔傳成單一字串
-    if len(devices) == 1 and "," in devices[0]:
-        devices = [d.strip() for d in devices[0].split(",") if d.strip()]
+    def _getlist(key: str) -> list[str]:
+        vals = req.query_params.getlist(key)
+        # 容錯:若以逗號分隔傳成單一字串
+        if len(vals) == 1 and "," in vals[0]:
+            vals = [v.strip() for v in vals[0].split(",") if v.strip()]
+        return vals
+
+    fabs = _getlist("fab")
+    weeks = _getlist("week")
+    devices = _getlist("device")
 
     rows = _quality_rows()
     valid_fabs = sorted({r["fab"] for r in rows})
@@ -152,33 +156,35 @@ async def get_quality(req: Request) -> JSONResponse:
     valid_devices = sorted({r["device"]["id"] for r in rows})
 
     def err(msg: str) -> JSONResponse:
-        return JSONResponse({"data": [], "errorCode": msg})
+        return JSONResponse({"data": {"queryResult": []}, "errorCode": msg})
 
-    if not fab:
-        return err("缺少必填參數 fab(呼叫 list_fabs 取得候選)")
+    if not fabs:
+        return err("缺少必填參數 fab(可傳多個;呼叫 list_fabs 取得候選)")
     if not devices:
         return err("缺少必填參數 device(可傳多個;呼叫 list_devices 取得候選)")
-    if not week:
-        return err("缺少必填參數 week(可用週別見 skill 或 list_weeks)")
-    if fab not in valid_fabs:
-        return err(f"未知的 fab '{fab}'——可用 fab:{', '.join(valid_fabs)}(呼叫 list_fabs)")
-    if week not in valid_weeks:
-        return err(f"週別 '{week}' 無資料——可用週別:{', '.join(valid_weeks)}")
+    if not weeks:
+        return err("缺少必填參數 week(可傳多個;可用週別見 skill 或 list_weeks)")
 
-    known = [d for d in devices if d in valid_devices]
-    if not known:
+    known_fabs = [f for f in fabs if f in valid_fabs]
+    if not known_fabs:
+        return err(f"fab {fabs} 皆未知——可用 fab:{', '.join(valid_fabs)}(呼叫 list_fabs)")
+    known_weeks = [w for w in weeks if w in valid_weeks]
+    if not known_weeks:
+        return err(f"week {weeks} 皆無資料——可用週別:{', '.join(valid_weeks)}")
+    known_devices = [d for d in devices if d in valid_devices]
+    if not known_devices:
         return err(
             f"device {devices} 皆無量測資料——有量測資料的 device:{', '.join(valid_devices)}"
             "(呼叫 list_devices;注意主檔 50 個 device 僅 DEV-01~08 有量測)"
         )
 
-    known_set = set(known)
+    fset, wset, dset = set(known_fabs), set(known_weeks), set(known_devices)
     filtered = [
         {**r, "device": dict(r["device"])}
         for r in rows
-        if r["fab"] == fab and r["week"] == week and r["device"]["id"] in known_set
+        if r["fab"] in fset and r["week"] in wset and r["device"]["id"] in dset
     ]
-    return JSONResponse({"data": filtered, "errorCode": ""})
+    return JSONResponse({"data": {"queryResult": filtered}, "errorCode": ""})
 
 
 async def health(req: Request) -> JSONResponse:

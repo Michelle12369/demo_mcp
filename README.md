@@ -61,11 +61,13 @@ feeder(純 lookup,依參數真過濾):
 
 主查詢:
 
-- `get_quality(fab, device, week)` — 依 fab/week 與**一組 device**(list,OR 語意)真過濾。
-  三個必填條件:`fab`←list_fabs、`device`←list_devices(可多個)、`week` 見 skill(2026-W29~W32)。
-  回信封 `{data, errorCode}`;參數超範圍回可行動 `errorCode`。
+- `get_quality(fab, device, week)` — 依 fab/week/device 真過濾;**三者皆可傳 list**
+  (各自 OR、維度間 AND),方便一次比較多廠/多週/多 device。三個必填條件:`fab`←list_fabs、
+  `device`←list_devices、`week` 見 skill(2026-W29~W32)。某維度全部無效回可行動 `errorCode`。
+  回傳量測列在 `data.queryResult`。
 
-所有 tool 回傳皆為信封 `{"data": [...], "errorCode": ""}`。
+feeder 回傳皆為信封 `{"data": [...], "errorCode": ""}`;`get_quality` 為
+`{"data": {"queryResult": [...]}, "errorCode": ""}`。
 
 ## 資料特性(供分析型 demo)
 
